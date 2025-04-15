@@ -8,7 +8,7 @@ test-coverage:
 	poetry run pytest --cov=src
 
 run:
-	poetry run python -m splitter.main
+	poetry run python -m uploader.handler
 
 format:
 	poetry run black .

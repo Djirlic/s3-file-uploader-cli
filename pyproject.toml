@@ -8,8 +8,7 @@ packages = [
   { include = "uploader", from = "src" }
 ]
 package-mode = true
-license = { text = "MIT" }
-requires-python = ">=3.13"
+license = "MIT"
 
 [tool.black]
 line-length = 100
@@ -29,6 +28,7 @@ python = ">=3.13"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.5"
 pytest-cov = "^6.1.1"
+pytest-mock = "^3.14.0"
 
 
 [tool.poetry.group.dev.dependencies]
