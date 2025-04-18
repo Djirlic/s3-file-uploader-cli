@@ -1,5 +1,5 @@
 import boto3
-from botocore.exceptions import ClientError
+from botocore.exceptions import BotoCoreError, ClientError, ProfileNotFound
 
 from uploader.logger import logger
 
@@ -38,8 +38,15 @@ def get_presigned_url(
             ExpiresIn=expiration,
             HttpMethod="PUT",
         )
+        return response
+    except ProfileNotFound as e:
+        logger.error(f"❌ AWS profile not found: {e}")
     except ClientError as e:
-        logger.error(f"❌ Failed generating presigned URL: {e}")
-        return None
+        error_code = e.response["Error"]["Code"]
+        logger.error(f"❌ AWS ClientError [{error_code}]: {e}")
+    except BotoCoreError as e:
+        logger.error(f"❌ BotoCoreError: {e}")
+    except Exception as e:
+        logger.exception(f"❌ Unexpected error while generating presigned URL: {e}")
 
-    return response
+    return None

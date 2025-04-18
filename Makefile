@@ -8,7 +8,7 @@ test-coverage:
 	poetry run pytest --cov=src
 
 run:
-	poetry run python -m uploader.main
+	poetry run python -m uploader.main ${ARGS}
 
 format:
 	poetry run black .
@@ -20,4 +20,4 @@ clean:
 	find . -type d -name '__pycache__' -exec rm -r {} +
 
 help:
-	poetry run python -m uploader.main --help
+	poetry run python -m uploader.main "--help"

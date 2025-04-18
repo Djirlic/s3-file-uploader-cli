@@ -1,4 +1,5 @@
 import argparse
+import sys
 from pathlib import Path
 
 from uploader.logger import logger
@@ -43,7 +44,7 @@ def main():
     )
     if presigned_url is None:
         logger.error("❌ Failed to generate presigned URL.")
-        exit(1)
+        sys.exit(1)
     result = upload_file_to_presigned_url(
         presigned_url=presigned_url,
         file_path=str(file_path),
@@ -52,7 +53,7 @@ def main():
         logger.info("✅ Upload completed successfully.")
     else:
         logger.error("❌ Upload failed.")
-        exit(1)
+        sys.exit(1)
 
 
 if __name__ == "__main__":
