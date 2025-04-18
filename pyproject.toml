@@ -24,6 +24,7 @@ skip_gitignore = true
 
 [tool.poetry.dependencies]
 python = ">=3.13"
+boto3 = "^1.37.35"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.5"
