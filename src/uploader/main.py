@@ -1,6 +1,9 @@
 import argparse
+from pathlib import Path
 
+from uploader.logger import logger
 from uploader.presigner import get_presigned_url
+from uploader.uploader import upload_file_to_presigned_url
 
 DEFAULT_PROFILE = "default"
 
@@ -25,13 +28,31 @@ def main():
         help=f"AWS profile name to use for authentication (defaults to {DEFAULT_PROFILE}).",
     )
     args = parser.parse_args()
+    file_path = Path(args.file_location).expanduser()
 
-    _ = get_presigned_url(
+    if not file_path.is_file():
+        logger.error(f"❌ File not found at: {file_path}")
+        exit(1)
+
+    logger.info(f"📦 Preparing upload of file: {file_path}")
+    presigned_url = get_presigned_url(
         bucket_name=args.bucket_name,
         upload_path=args.upload_path,
         profile=args.profile,
         expiration=3600,
     )
+    if presigned_url is None:
+        logger.error("❌ Failed to generate presigned URL.")
+        exit(1)
+    result = upload_file_to_presigned_url(
+        presigned_url=presigned_url,
+        file_path=str(file_path),
+    )
+    if result:
+        logger.info("✅ Upload completed successfully.")
+    else:
+        logger.error("❌ Upload failed.")
+        exit(1)
 
 
 if __name__ == "__main__":

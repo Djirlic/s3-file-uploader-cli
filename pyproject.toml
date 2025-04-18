@@ -25,6 +25,7 @@ skip_gitignore = true
 [tool.poetry.dependencies]
 python = ">=3.13"
 boto3 = "^1.37.35"
+requests = "^2.32.3"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.5"
@@ -39,6 +40,9 @@ black = "^25.1.0"
 isort = "^6.0.1"
 mypy = "^1.15.0"
 pre-commit = "^4.2.0"
+types-requests = "^2.32.0.20250328"
+boto3-stubs = "^1.37.37"
+botocore-stubs = "^1.37.37"
 
 [build-system]
 requires = ["poetry-core>=2.1.2,<3.0.0"]

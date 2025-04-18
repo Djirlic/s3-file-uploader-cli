@@ -1,9 +1,12 @@
 import boto3
 from botocore.exceptions import ClientError
 
+from uploader.logger import logger
+
 
 def get_s3_client(profile: str | None = None):
     session = boto3.Session(profile_name=profile) if profile else boto3.Session()
+    logger.info(f"🔐 Using AWS profile: {profile or 'default'}")
     return session.client("s3")
 
 
@@ -15,7 +18,7 @@ def get_presigned_url(
 
     Args:
         bucket_name (str): Name of the S3 bucket.
-        upload_path (str): Path in the S3 bucket to upload to (including the CSV file).
+        upload_path (str): Path in the S3 bucket to upload to (including the name of the CSV file).
         profile (str, optional): AWS profile name. Defaults to None and default AWS profile.
         expiration (int, optional):
           Time in seconds for the presigned URL to remain valid. Defaults to 3600.
@@ -26,13 +29,17 @@ def get_presigned_url(
     s3_client = get_s3_client(profile=profile)
 
     try:
+        logger.info(
+            f"🔗 Generating presigned URL for bucket='{bucket_name}' and key='{upload_path}'..."
+        )
         response = s3_client.generate_presigned_url(
             "put_object",
             Params={"Bucket": bucket_name, "Key": upload_path},
             ExpiresIn=expiration,
+            HttpMethod="PUT",
         )
     except ClientError as e:
-        print(f"Error generating presigned URL: {e}")
+        logger.error(f"❌ Failed generating presigned URL: {e}")
         return None
 
     return response

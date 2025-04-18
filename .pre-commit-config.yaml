@@ -1,24 +1,29 @@
 repos:
-  - repo: https://github.com/psf/black
-    rev: 25.1.0
+  - repo: local
     hooks:
       - id: black
+        name: black (via poetry)
+        entry: poetry run black
+        language: system
+        types: [python]
 
-  - repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
-    hooks:
       - id: flake8
-        additional_dependencies: [Flake8-pyproject]
+        name: flake8 (via poetry)
+        entry: poetry run flake8
+        language: system
+        types: [python]
 
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
       - id: isort
+        name: isort (via poetry)
+        entry: poetry run isort
+        language: system
+        types: [python]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
-    hooks:
       - id: mypy
+        name: mypy (via poetry)
+        entry: poetry run mypy
+        language: system
+        types: [python]
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
