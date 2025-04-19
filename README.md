@@ -47,12 +47,30 @@ Before using this tool, make sure the following are set up:
 
 > [!WARNING]
 > For safety and best practices, we strongly recommend using an **AWS profile with least privilege** when running this tool.
+
 > This means:
 > - Create a dedicated IAM user or role for uploads
 > - Attach a custom policy that **only allows `s3:PutObject` on the specific bucket or path**
 > - Avoid using your root credentials or overly permissive policies like `AdministratorAccess`
 >
 > This reduces the risk of accidental or malicious access to other AWS resources in your account.
+
+---
+
+## 🧠 Why Use Presigned URLs?
+
+This tool uses presigned URLs to upload files directly to Amazon S3, instead of routing large files through API Gateway or other intermediaries.
+
+|  | API Gateway as a proxy | **Presigned URLs with API Gateway** | CloudFront with Lambda@Edge |
+| ------------- | ------------- | ------------- | ------------- |
+| Max Object Size  | 10 MB  | **5 GB (5 TB with multipart upload)** | 5 GB |
+| Client Complexity  | Single HTTP Request  | **Multiple HTTP Requests** | Single HTTP Request |
+| Authorization Options  | Amazon Cognito, IAM, Lambda Authorizer  | **Amazon Cognito, IAM, Lambda Authorizer**  | Lambda@Edge |
+| Throttling  | API Key Throttling  | **API Key Throttling**  | Custom Throttling |
+
+*Source: https://aws.amazon.com/blogs/compute/patterns-for-building-an-api-to-upload-files-to-amazon-s3/*
+
+Presigned URLs strike a great balance between security, upload size, and simplicity, making them ideal for data engineering ingestion pipelines.
 
 ---
 
