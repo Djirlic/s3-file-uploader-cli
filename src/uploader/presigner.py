@@ -15,7 +15,7 @@ def get_s3_client(profile: str | None = None):
 
 
 def get_presigned_url(
-    bucket_name: str, upload_path: str, profile: str | None = None, expiration: int = 3600
+    bucket_name: str, upload_path: str, profile: str | None = None, expiration: int = 300
 ) -> str | None:
     """
     Generate a presigned URL to upload a file to S3.
@@ -25,7 +25,7 @@ def get_presigned_url(
         upload_path (str): Path in the S3 bucket to upload to (including the name of the file).
         profile (str, optional): AWS profile name. Defaults to None and default AWS profile.
         expiration (int, optional):
-          Time in seconds for the presigned URL to remain valid. Defaults to 3600.
+          Time in seconds for the presigned URL to remain valid. Defaults to 300.
 
     Returns:
         str: Presigned URL as a string. None if error occurs.
