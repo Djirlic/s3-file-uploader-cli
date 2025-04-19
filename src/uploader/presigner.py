@@ -5,9 +5,13 @@ from uploader.logger import logger
 
 
 def get_s3_client(profile: str | None = None):
-    session = boto3.Session(profile_name=profile) if profile else boto3.Session()
-    logger.info(f"🔐 Using AWS profile: {profile or 'default'}")
-    return session.client("s3")
+    try:
+        session = boto3.Session(profile_name=profile) if profile else boto3.Session()
+        logger.info(f"🔐 Using AWS profile: {profile or 'default'}")
+        return session.client("s3")
+    except ProfileNotFound as e:
+        logger.error(f"❌ AWS profile not found: {e}")
+        raise
 
 
 def get_presigned_url(
@@ -26,9 +30,9 @@ def get_presigned_url(
     Returns:
         str: Presigned URL as a string. None if error occurs.
     """
-    s3_client = get_s3_client(profile=profile)
 
     try:
+        s3_client = get_s3_client(profile=profile)
         logger.info(
             f"🔗 Generating presigned URL for bucket='{bucket_name}' and key='{upload_path}'..."
         )
