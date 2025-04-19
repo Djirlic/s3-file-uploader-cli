@@ -17,12 +17,10 @@ def main():
     parser.add_argument("--bucket-name", help="Name of the S3 bucket to upload to.", required=True)
     parser.add_argument(
         "--upload-path",
-        help="Path in the S3 bucket to upload to including the CSV file.",
+        help="Path in the S3 bucket to upload to (including the file).",
         required=True,
     )
-    parser.add_argument(
-        "--file-location", help="Local path to the CSV file to upload.", required=True
-    )
+    parser.add_argument("--file-location", help="Local path to the file to upload.", required=True)
     parser.add_argument(
         "--profile",
         default=DEFAULT_PROFILE,

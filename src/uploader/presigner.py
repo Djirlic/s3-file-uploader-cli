@@ -22,7 +22,7 @@ def get_presigned_url(
 
     Args:
         bucket_name (str): Name of the S3 bucket.
-        upload_path (str): Path in the S3 bucket to upload to (including the name of the CSV file).
+        upload_path (str): Path in the S3 bucket to upload to (including the name of the file).
         profile (str, optional): AWS profile name. Defaults to None and default AWS profile.
         expiration (int, optional):
           Time in seconds for the presigned URL to remain valid. Defaults to 3600.

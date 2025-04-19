@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "csv-to-s3-uploader"
-description = "Upload CSV files to an S3 bucket via API Gateway and AWS Lambda — designed for serverless ingestion pipelines."
+name = "s3-file-uploader-cli"
+description = "Upload files to Amazon S3 using presigned URLs — designed for CLI-first, flexible ingestion workflows."
 version = "0.1.0"
 authors = ["Manuel Djirlic"]
 readme = "README.md"
